@@ -1,15 +1,19 @@
 <?php
-include("./TodoManger.php")
-include("./Todo.php")
+include('./TodoManager.php');
+include('./Todo.php');
+$cx = new Connexion();
+$manager = new TodoManager($cx);
+
 
 
 if(isset($_POST["submit"])){
-	$title = htmlspecialchars(strip_tags(trim($_POST["title"])));
-    $date = htmlspecialchars(strip_tags(trim($_POST["date"])));
-    $description = htmlspecialchars(strip_tags(trim($_POST["description"])));
-    $importance = htmlspecialchars(strip_tags(trim($_POST["importance"])));
+    $obj = new Todo($_POST);
+    if($manager->insertTodo($obj)){
+        header("Location: index.php");
+        echo"sucess";
+    }else{
+        echo"pb";
+    }
 
-    
 
-   
 }

@@ -29,7 +29,7 @@ $nb     =!is_null($objets)?count($objets):0 ;
             <h1 class="text-red-500 text-3xl text-center pt-4 ml-12">
                 Votre liste de tâches
             </h1>
-            <form action="creation.php" method="post" name="submi">
+            <form action="PostTodo.php" method="post" name="submit">
             <div class="mb-2 mt-12 text-purlple-red">
                 <label class="text-white block ml-4">Titre</label>
                 <input
@@ -37,6 +37,7 @@ $nb     =!is_null($objets)?count($objets):0 ;
                     type="text"
                     class="title w-72 my-2 ml-4 rounded-md indent-2"
                     required
+                    value="2121"
                 />
             </div>
             <div class="my-2">
@@ -46,6 +47,8 @@ $nb     =!is_null($objets)?count($objets):0 ;
                     class="description w-72 my-2 ml-4 rounded-md indent-2"
                     required
                     name="description"
+                    value="2121"
+
 
                 />
             </div>
@@ -56,7 +59,9 @@ $nb     =!is_null($objets)?count($objets):0 ;
                     class="date w-72 my-2 ml-4 rounded-md indent-2"
                     aria-placeholder="espece"
                     required
-                   name="date"
+                    name="date"
+                    value="21-08-2022"
+
                 />
             </div>
                         <div class="mb-2 mt-12 text-purlple-red">
@@ -66,6 +71,8 @@ $nb     =!is_null($objets)?count($objets):0 ;
                     type="text"
                     class="title w-72 my-2 ml-4 rounded-md indent-2"
                     required
+                    value="2121"
+
                 />
             </div>
             <div class="my-2">
@@ -79,13 +86,15 @@ $nb     =!is_null($objets)?count($objets):0 ;
                      <?php 
 
 
-
-        echo "<div class='w-1/2 mx-auto border border-solid border-2 border-white pl-12'> <p> Il y a ".$nb."Todos </p>";
         foreach($objets as $objet){
-        echo "<h3 class='text-white'>".$objet->getTitle()."</h3>";
-        echo "<p class='text-white' > 
-        Titre :".$objet->getDescription()."</p>";
-        echo "<p class='text-white' > 
+
+      
+        echo "<div class='w-1/3 mx-8 my-8 py-4 px-4 border border-solid border-2 border-white pl-12'> <p> Il y a ".$nb."Todos </p>
+
+        <h3 class='text-white'>".$objet->getTitle()."</h3>
+        <p class='text-white' > 
+        Titre :".$objet->getDescription()."</p>
+        <p class='text-white' > 
         Titre :".$objet->getDate()."</p>
         </div>";
 
