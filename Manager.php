@@ -1,10 +1,10 @@
 <?php
-include("./Connexion.php");
-
-class Manager extends Connexion {
+class Manager extends Connexion
+{
 	protected $db;
 
-	function __construct(Connexion $connexion){
+	function __construct(Connexion $connexion)
+	{
 		$this->db = $connexion;
 	}
 }

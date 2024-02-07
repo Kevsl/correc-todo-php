@@ -1,13 +1,15 @@
 <?php
 
-class Connexion extends MySQLi {
+class Connexion extends MySQLi
+{
 	private $host 	= "localhost";
 	private $login 	= "root";
 	private $pass 	= "";
 	private $bdd 	= "todo";
 	private $mysqli;
 
-	function __construct(){
+	function __construct()
+	{
 		$this->mysqli = @parent::__construct(
 			$this->host,
 			$this->login,
@@ -15,17 +17,10 @@ class Connexion extends MySQLi {
 			$this->bdd
 		);
 
-		if($this->connect_errno){
+		if ($this->connect_errno) {
 			die("Service indisponible");
-		}else{
+		} else {
 			$this->set_charset("utf8");
 		}
 	}
 }
-
-
-
-
-
-
-

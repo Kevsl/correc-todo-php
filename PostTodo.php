@@ -6,14 +6,12 @@ $manager = new TodoManager($cx);
 
 
 
-if(isset($_POST["submit"])){
+if (isset($_POST["submit"])) {
     $obj = new Todo($_POST);
-    if($manager->insertTodo($obj)){
+    if ($manager->insertTodo($obj)) {
         header("Location: index.php");
-        echo"sucess";
-    }else{
-        echo"pb";
+        echo "sucess";
+    } else {
+        echo "pb";
     }
-
-
 }
