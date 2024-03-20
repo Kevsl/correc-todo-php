@@ -1,10 +1,47 @@
 <?php
-require_once("./TodoManager.php");
-include("./Todo.php");
-$cx = new Connexion();
-$manager = new TodoManager($cx);
-$objets = $manager->allTodos();
-$nb     = !is_null($objets) ? count($objets) : 0;
+
+use Models\DbConnexion\DbConnexion;
+use Repositories\CategoryManager\CategoryManager;
+use Repositories\ProductManager\ProductManager;
+
+include('autoloader.php');
+
+
+// Le use permet d'utiliser une classe, en spécifiant son namespace\nom de la classe.
+
+
+
+// Ici j'instancie un objet $dbConnexion qui est enfant de la classe DbConnexion.
+// Pourquoi ? Car une classe est un moule, qui ne sers à rien d'autre que construire ( construct) 
+// Des objets.
+// Autrement dit, il faut d'abord instancier une classe pour pouvoir utiliser son objet et donc se connecter.
+// Je crée donc ici un objet dbConnexion, qui permettra à Php de se connecter à la bdd MySQL
+// Ma connexion à la dbb, s'occupe seulement de passer les identifiants et le nom de la bdd 
+// Cette classe ne serts pas à créer des requêtes SQL ( ex: SELECT * FROM user)
+$dbConnexion = new DbConnexion();
+
+
+// De la même manière pour utiliser le product manager qui va utiliser la connexion pour effectuer des requêtes, 
+// il faut passer à ce manager l'instance de connexion.
+// Mon product manager ne s'occupe pas de la connexion, seulement des requêtes.
+// La connexion lui est passée en paramètres.
+// C'est pour cela que je passe à mon product manager mon instance de connexion.
+$productManager = new ProductManager($dbConnexion);
+
+
+$products = $productManager->allProductsAndCategories();
+// Grâce à l'instance de mon productManager, j'ai accès aux fonctions de cette classe.
+// Comme ici la requêtes avoir tous les produits et catégories.
+// Cette classe sert a gérer toutes les requêtes SQL de ma classe Product.
+// Dans cette fonction un tableau de produits est générés , et je peux donc me servir plus bas de 
+// cette variable dans un forEeach pour afficher les produits.
+
+
+$categoryManager =   new CategoryManager($dbConnexion);
+$categories = $categoryManager->allCategories();
+
+
+
 
 ?>
 <!DOCTYPE html>
@@ -17,8 +54,6 @@ $nb     = !is_null($objets) ? count($objets) : 0;
 </head>
 
 <body>
-
-
     <!DOCTYPE html>
     <html lang="en">
 
@@ -29,61 +64,27 @@ $nb     = !is_null($objets) ? count($objets) : 0;
     </head>
 
     <body>
-        <main class="main w-full bg-black min-h-screen pl-12 my-0">
-            <h1 class="text-red-500 text-3xl text-center pt-4 ml-12">
-                Votre liste de tâches
-            </h1>
-            <form action="PostTodo.php" method="post" name="submit">
-                <div class="mb-2 mt-12 text-purlple-red">
-                    <label class="text-white block ml-4">Titre</label>
-                    <input name="title" type="text" class="title w-72 my-2 ml-4 rounded-md indent-2" required value="2121" />
-                </div>
-                <div class="my-2">
-                    <label class="text-white block ml-4">Description</label>
-                    <input type="text" class="description w-72 my-2 ml-4 rounded-md indent-2" required name="description" value="2121" />
-                </div>
-                <div class="my-2">
-                    <label class="text-white block ml-4">Date</label>
-                    <input type="date" class="date w-72 my-2 ml-4 rounded-md indent-2" aria-placeholder="espece" required name="date" value="21-08-2022" />
-                </div>
-                <div class="mb-2 mt-12 text-purlple-red">
-                    <label class="text-white block ml-4">Importance</label>
-                    <input name="importance" type="text" class="title w-72 my-2 ml-4 rounded-md indent-2" required value="2121" />
-                </div>
-                <div class="my-2">
-                    <input type="submit" name="submit" class="border border-2 border-white text-white rounded-md ml-4 px-2 py-2 my-4" />
+        <main class="main w-full bg-black min-h-screen pl-12 py-8 w-1/2 px-auto flex flex-col justify-center">
 
-                </div>
+        <?php
+         // Ici on sépare la couche vue du reste de l'application, 
+         // on récupère les données plus haut,  et on appelle une vue 
+         // avec un include pour les afficher .
+         // On pourrait être tentés de mettre aussi la logique métier plus haut dans ce fichier égalemment dans la vue
+         // mais c'est anti pattern.
+         include("./Views/AllProducts.php");
+         include("./Views/AddProduct.php") ;
+         include("./Views/Register.php");
 
-                <div class="todos-list flex flex-wrap w-10/12">
-                    <?php
-
-
-                    foreach ($objets as $objet) {
-
-
-                        echo "<div class='w-1/3 mx-8 my-8 py-4 px-4 border border-solid border-2 border-white pl-12'> <p> Il y a " . $nb . "Todos </p>
-
-                            <h3 class='text-white'>" . $objet->getTitle() . "</h3>
-                            <p class='text-white' > 
-                            Titre :" . $objet->getDescription() . "</p>
-                            <p class='text-white' > 
-                            Titre :" . $objet->getDate() . "</p>
-                            </div>";
-                    }
-                    ?>
+        ?>
 
 
 
-                </div>
         </main>
-        </form>
-    </body>
-    <script src="https://cdn.tailwindcss.com"></script>
+   <?php include("./Views/footer.php") ?>
 
-    </html>
 </body>
-
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="script.js"></script>
 
 </html>
