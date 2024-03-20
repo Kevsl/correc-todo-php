@@ -47,5 +47,5 @@
 
     
   </div>
-  <p class="toast text-red bg-white w-1/2 h-20 mx-auto"></p>
+  <p class="toast text-red w-1/2 h-20 mx-auto"></p>
 </div>

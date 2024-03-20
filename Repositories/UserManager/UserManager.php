@@ -85,7 +85,7 @@ class UserManager
         $email = $user->getEmail_user();
  
         try {
-            $stmt = $this->pdo->query("SELECT * FROM user WHERE email_user = '$email' ");
+            $stmt = $this->pdo->query("SELECT * FROM user WHERE email = '$email' ");
 
         } catch (\PDOException $e) {
             return $e;
@@ -95,12 +95,8 @@ class UserManager
                 $user = new User($row);
             }
 
-            if(isset($user)){
-           return $user;
-            }
-            else{
-                return 0;
-            }
+             return $stmt->rowCount() == 1;
+
 
     }
 

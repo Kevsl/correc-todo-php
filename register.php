@@ -27,10 +27,11 @@ if(isset($_POST)){
     //      echo "Email already taken "
     // }
     
-    if($userManager->checkUserExist($user) !== 0){
-        echo"Email already taken";
+    if($userManager->checkUserExist($user) ){
+        echo "Email already taken";
         return;
     }
+
 
     // On peut donc utiliser la méthode register, et lui passer notre instance d'user récupérée dans le json de 
     // la requête http
@@ -43,7 +44,7 @@ if(isset($_POST)){
 
     if($userManager->register(($user))){
         $_SESSION["id"] = $user->getId_user();
-        echo 1;
+        echo "inserted";
     }else{
         echo "Error";
     }

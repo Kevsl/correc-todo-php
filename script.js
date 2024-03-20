@@ -45,14 +45,15 @@ password_user :password,
 
 function handleFetchResponse(data){
 console.log(data)
-        let registerForm = document.querySelector("formRegister")
-        // registerForm.style.display= "none"
+        // SI PHP renvoi le mot clef Email already taken
         if(data === "Email already taken"){
-          console.log(data);
           let toast = document.querySelector(".toast")
           toast.innerText = data
-        }else if(data == 1){
-          registerForm.style.display = "none"
+          
+        }else{
+          let registerForm = document.querySelector(".formRegister")
+          registerForm.classList.add("hidden")
+         // Le formulaire disparait
         }   
 }
 
